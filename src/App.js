@@ -18,8 +18,17 @@ const App = () => {
   const [posts, setPosts] = useState(friends)
   // This state is the source of truth for the data inside the app. You won't be needing dummyData anymore.
   // To make the search bar work (which is stretch) we'd need another state to hold the search term.
-
+  const [searchTerm, setSearchTerm] = useState('')
   const likePost = postId => {
+    const newPosts = posts.map(post => {
+      if (post.id === postId) {
+        return {...post, likes: post.likes + 1}
+      }else {
+        return post
+      }
+    })
+    setPosts(newPosts)
+  };
 
     /*
       This function serves the purpose of increasing the number of likes by one, of the post with a given id.
@@ -32,13 +41,12 @@ const App = () => {
         - if the `id` of the post matches `postId`, return a new post object with the desired values (use the spread operator).
         - otherwise just return the post object unchanged.
      */
-  };
-
+    
   return (
     <div className='App'>
       {/* Add SearchBar and Posts here to render them */}
       <SearchBar/>
-      <Posts/>
+      <Posts posts={posts} likePost={likePost}/>
       {/* Check the implementation of each component, to see what props they require, if any! */}
     </div>
   );
