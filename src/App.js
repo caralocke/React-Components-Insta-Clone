@@ -17,6 +17,7 @@ const App = () => {
   // Create a state called `posts` to hold the array of post objects, **initializing to dummyData**.
   // This state is the source of truth for the data inside the app. You won't be needing dummyData anymore.
   const [posts, setPosts] = useState(dummyData)
+  const [searchTerm, setSearchTerm] = useState('')
   // To make the search bar work (which is stretch) we'd need another state to hold the search term.
 
   /*
@@ -41,10 +42,16 @@ const App = () => {
     setPosts(newPosts)
   };
 
+  const performSearch = () => {
+    return posts.filter(post => {
+      return post.username.includes(searchTerm)
+    })
+  }
+
   return (
     <div className='App'>
       {/* Add SearchBar and Posts here to render them */}
-      <SearchBar />
+      <SearchBar performSearch={performSearch}/>
       <Posts likePost={likePost} posts={posts}/>
       {/* Check the implementation of each component, to see what props they require, if any! */}
     </div>
